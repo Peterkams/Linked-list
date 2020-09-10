@@ -2,14 +2,25 @@
 // 
 // Implementation for linked list.
 //
-// <Author>
+// Peter Kamlewechi
 
 #include <stdio.h>
 
 #include "list.h"
 
 list_t *list_alloc() { return NULL; }
-void list_free(list_t *l) {}
+
+void list_free(list_t *l) {
+  //struct node* temp;
+  node_t temp;
+  
+  while(l->head != NULL)
+  {
+    temp = l->head;
+    l->head = node_t->next;
+    free(tmp);
+  }
+}
 
 void list_print(list_t *l) {}
 int list_length(list_t *l) { return -1; }
