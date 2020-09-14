@@ -19,6 +19,20 @@ list_t *list_alloc() {
 
 // Function for freeing a list.
 void list_free(list_t *l) {
+	if (l == NULL)
+    	{
+        	return;
+    	}
+    	node_t *current_node = l->head;
+    	node_t *next_node = NULL;
+    	while (current_node != NULL)
+    	{
+        	next_node = current_node->next;
+        	free(current_node);
+        	current_node = next_node;
+    	}
+    	l->head = NULL;
+	free(l);
   //struct node* temp;
   /*node_t temp;
   
@@ -28,10 +42,6 @@ void list_free(list_t *l) {
     l->head = node_t->next;
     free(tmp);
   }*/
-  	if (!l) {
-   		return;
-  	}
-  	free (l);
 }
 
 // Function to print a list in a format.
