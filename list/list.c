@@ -109,7 +109,7 @@ void list_add_at_index(list_t *l, elem value, int index) {
 // Function to remove an element from the back of a list.
 elem list_remove_from_back(list_t *l) {
 	node_t *previous_node = l->head;
-	node_t *current_node = prev_node->next;
+	node_t *current_node = previous_node->next;
     	while (current_node->next != NULL)
     	{
 		previous_node = current_node;
@@ -138,7 +138,7 @@ elem list_remove_at_index(list_t *l, int index) {
 	int counter = 0;
     	node_t *prev_node = l->head;
 	node_t *current_node = prev_node->next;
-    	while (current_node->next != NULL && count < (index - 1))
+    	while (current_node->next != NULL && counter < (index - 1))
 	{
         	counter++;
 		prev_node = current_node;
@@ -155,7 +155,7 @@ elem list_remove_at_index(list_t *l, int index) {
 bool list_is_in(list_t *l, elem value) {
 	bool element_present;
     	node_t *current_node = l->head;
-    	while (current_node->next != NULL && !exist)
+    	while (current_node->next != NULL && !element_present)
     	{
 		if (current_node->value == value){
 			element_present = true;
