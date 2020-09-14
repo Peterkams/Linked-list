@@ -8,13 +8,15 @@
 
 #include "list.h"
 
+// Function for allocating to a list.
 list_t *list_alloc() {
-  list_t *linked_list;
-  linked_list = malloc(sizeof(list_t));
+  	list_t *linked_list;
+  	linked_list = malloc(sizeof(list_t));
 	linked_list->head = NULL;
-    return linked_list;
+    	return linked_list;
 }
 
+// Function for freeing a list.
 void list_free(list_t *l) {
   //struct node* temp;
   /*node_t temp;
@@ -25,12 +27,13 @@ void list_free(list_t *l) {
     l->head = node_t->next;
     free(tmp);
   }*/
-  if (!l) {
-    return;
-  }
-  free (l);
+  	if (!l) {
+   		return;
+  	}
+  	free (l);
 }
 
+// Function to print a list in a format.
 void list_print(list_t *l) {
 	node_t *current_node = l->head;
 	node_t *next_node = NULL;
@@ -44,6 +47,7 @@ void list_print(list_t *l) {
 	printf("\n");
 }
 
+// Returns the length of the given lsit.
 int list_length(list_t *l) {
     	int length;
     	node_t *current_node = l->head;
@@ -55,6 +59,9 @@ int list_length(list_t *l) {
     	return length; 
 }
 
+// The below methods are for adding an element to a list.
+
+// Function to add an element to the back of a list.
 void list_add_to_back(list_t *l, elem value) {
         node_t *new_node = malloc(sizeof(node_t));
         new_node->value = value;
@@ -68,6 +75,7 @@ void list_add_to_back(list_t *l, elem value) {
         current_node->next = new_node;
 }
 
+// Function to add an element to the front of a list.
 void list_add_to_front(list_t *l, elem value) {
 	node_t *new_node;
 	new_node->value = value;
@@ -75,6 +83,7 @@ void list_add_to_front(list_t *l, elem value) {
         l->head = new_node;
 }
 
+// Function to add an element at a particular index in the list.
 void list_add_at_index(list_t *l, elem value, int index) {
 	node_t *newnode;
 	newnode = malloc(sizeof(node_t));
@@ -94,6 +103,9 @@ void list_add_at_index(list_t *l, elem value, int index) {
         } 
 }
 
+// The below methods are for removing an element to a list.
+
+// Function to remove an element from the back of a list.
 elem list_remove_from_back(list_t *l) {
 	node_t *previous_node = l->head;
 	node_t *current_node = prev_node->next;
@@ -108,6 +120,7 @@ elem list_remove_from_back(list_t *l) {
     	return value; 
 }
 
+// Function to remove an element from the front of a list.
 elem list_remove_from_front(list_t *l) {
 	elem value = 0;
     	node_t *current = l->head;
@@ -119,6 +132,7 @@ elem list_remove_from_front(list_t *l) {
     	return value;
 }
 
+// Function to remove an element at a particular index of a list.
 elem list_remove_at_index(list_t *l, int index) {
 	int counter = 0;
     	node_t *prev_node = l->head;
@@ -136,6 +150,7 @@ elem list_remove_at_index(list_t *l, int index) {
     	return value;
 }
 
+// Function to check if a given element is present in a list.
 bool list_is_in(list_t *l, elem value) {
 	bool element_present;
     	node_t *current_node = l->head;
@@ -149,6 +164,8 @@ bool list_is_in(list_t *l, elem value) {
     	return element_present; 
 }
 
+
+// Function to return the element at a particular index.
 elem list_get_elem_at(list_t *l, int index) {
 	int counter = 0;
 	elem value = 0;
@@ -164,6 +181,7 @@ elem list_get_elem_at(list_t *l, int index) {
 	return value; 
 }
 
+// Function to return the index in which the element is present.
 int list_get_index_of(list_t *l, elem value) {
 	int counter = 0;
 	node_t *current_node = l->head;
