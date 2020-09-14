@@ -80,24 +80,101 @@ void list_add_at_index(list_t *l, elem value, int index) {
 	newnode = malloc(sizeof(node_t));
         newnode->value = value;
         node_t *temp = l->head;
-        int count = 0;
+        int counter = 0;
         while(temp->next != NULL)
 	{
-        	if (count+1 == index)
+        	if (counter+1 == index)
 		{
                 	newnode->next = temp->next;
             		temp->next = newnode;
             		break;
         	}
-		count++;
+		counter++;
                 temp = temp->next;
         } 
 }
 
-elem list_remove_from_back(list_t *l) { return -1; }
-elem list_remove_from_front(list_t *l) { return -1; }
-elem list_remove_at_index(list_t *l, int index) { return -1; }
+elem list_remove_from_back(list_t *l) {
+	node_t *previous_node = l->head;
+	node_t *current_node = prev_node->next;
+    	while (current_node->next != NULL)
+    	{
+		previous_node = current_node;
+        	current_node = current_node->next;
+    	}
+	previous_node->next = NULL;
+        elem value = current_node->value;
+    	free(current_node);
+    	return value; 
+}
 
-bool list_is_in(list_t *l, elem value) { return false; }
-elem list_get_elem_at(list_t *l, int index) { return -1; }
-int list_get_index_of(list_t *l, elem value) { return -1; }
+elem list_remove_from_front(list_t *l) {
+	elem value = 0;
+    	node_t *current = l->head;
+    	value = current->value;
+    	l->head = current->next;
+    	list_t *remove;
+    	remove->head = current;
+    	list_free(remove);
+    	return value;
+}
+
+elem list_remove_at_index(list_t *l, int index) {
+	int counter = 0;
+    	node_t *prev_node = l->head;
+	node_t *current_node = prev_node->next;
+    	while (current_node->next != NULL && count < (index - 1))
+	{
+        	counter++;
+		prev_node = current_node;
+        	current_node = current_node->next;
+    	}
+    	node_t *temp = current_node;
+    	prev_node->next = current_node->next;
+    	elem value = temp->value;
+    	free(temp);
+    	return value;
+}
+
+bool list_is_in(list_t *l, elem value) {
+	bool element_present;
+    	node_t *current_node = l->head;
+    	while (current_node->next != NULL && !exist)
+    	{
+		if (current_node->value == value){
+			element_present = true;
+		}
+        	current_node = current_node->next;
+    	}
+    	return element_present; 
+}
+
+elem list_get_elem_at(list_t *l, int index) {
+	int counter = 0;
+	elem value = 0;
+	node_t *current_node = l->head;
+    	while (current_node->next != NULL && counter < (index))
+    	{
+		counter++;
+        	current_node = current_node->next;
+    	}
+	if (current_node != NULL){
+		value = current_node->value;
+	}
+	return value; 
+}
+
+int list_get_index_of(list_t *l, elem value) {
+	int counter = 0;
+	node_t *current_node = l->head;
+    	while (current_node->next != NULL)
+    	{
+		if (current_node->value == value){
+			return counter;
+		} else {
+			counter++;
+			current_node = current_node->next;
+		}
+    	}
+	return counter; 
+}
