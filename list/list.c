@@ -32,31 +32,67 @@ void list_free(list_t *l) {
 }
 
 void list_print(list_t *l) {
-  node_t *current_node = l->head;
-  node_t *next_node = NULL;
-  while (current_node->next != NULL)
-    {
-        printf("%d -> ", current_node->value);
-        next_node = current_node->next;
-        current_node = next_node;
-    }
+	node_t *current_node = l->head;
+	node_t *next_node = NULL;
+	while (current_node->next != NULL)
+	{
+		printf("%d -> ", current_node->value);
+		next_node = current_node->next;
+		current_node = next_node;
+	}
 	printf("%d", current_node->value);
 	printf("\n");
 }
 
 int list_length(list_t *l) {
-    int length;
-    node_t *current_node = l->head;
-    while(current_node != NULL){
-        length++;
-        current_node = current_node->next;
-    }
-    return length; 
+    	int length;
+    	node_t *current_node = l->head;
+    	while(current_node != NULL)
+	{
+        	length++;
+        	current_node = current_node->next;
+   	}
+    	return length; 
 }
 
-void list_add_to_back(list_t *l, elem value) {}
-void list_add_to_front(list_t *l, elem value) {}
-void list_add_at_index(list_t *l, elem value, int index) {}
+void list_add_to_back(list_t *l, elem value) {
+        node_t *new_node = malloc(sizeof(node_t));
+        new_node->value = value;
+        new_node->next = NULL;
+        node_t *current_node = l->head;
+	
+        while (current_node->next != NULL)
+	{
+		current_node = current_node->next;
+	}
+        current_node->next = new_node;
+}
+
+void list_add_to_front(list_t *l, elem value) {
+	node_t *new_node;
+	new_node->value = value;
+        new_node->next = l->head;
+        l->head = new_node;
+}
+
+void list_add_at_index(list_t *l, elem value, int index) {
+	node_t *newnode;
+	newnode = malloc(sizeof(node_t));
+        newnode->value = value;
+        node_t *temp = l->head;
+        int count = 0;
+        while(temp->next != NULL)
+	{
+        	if (count+1 == index)
+		{
+                	newnode->next = temp->next;
+            		temp->next = newnode;
+            		break;
+        	}
+		count++;
+                temp = temp->next;
+        } 
+}
 
 elem list_remove_from_back(list_t *l) { return -1; }
 elem list_remove_from_front(list_t *l) { return -1; }
