@@ -33,15 +33,6 @@ void list_free(list_t *l) {
     	}
     	l->head = NULL;
 	free(l);
-  //struct node* temp;
-  /*node_t temp;
-  
-  while(l->head != NULL)
-  {
-    temp = l->head;
-    l->head = node_t->next;
-    free(tmp);
-  }*/
 }
 
 // Function to print a list in a format.
@@ -88,30 +79,29 @@ void list_add_to_back(list_t *l, elem value) {
 
 // Function to add an element to the front of a list.
 void list_add_to_front(list_t *l, elem value) {
-	node_t *new_node;
-	new_node->value = value;
-        new_node->next = l->head;
-        l->head = new_node;
+    	node_t *new_node = malloc(sizeof(node_t));
+    	new_node->value = value;
+    	new_node->next = l->head;
+	l->head = new_node;
 }
 
 // Function to add an element at a particular index in the list.
-void list_add_at_index(list_t *l, elem value, int index) {
-	node_t *newnode;
-	newnode = malloc(sizeof(node_t));
-        newnode->value = value;
-        node_t *temp = l->head;
-        int counter = 0;
-        while(temp->next != NULL)
-	{
-        	if (counter+1 == index)
-		{
-                	newnode->next = temp->next;
-            		temp->next = newnode;
-            		break;
-        	}
-		counter++;
-                temp = temp->next;
-        } 
+void list_add_at_index(list_t *l, elem value, int index) {	
+	int count = 1;
+    	node_t *new_node = malloc(sizeof(node_t));
+    	new_node->value = value;
+    	new_node->next = NULL;
+    	node_t * current_node = l->head;
+    	node_t* next_node = NULL;
+    	while (current_node != NULL && count < (index))
+    	{
+        	count++;
+        	next_node = current_node->next;
+        	current_node = next_node;
+   	}
+   	next_node = current_node->next;
+    	current_node->next = new_node;
+    	new_node->next = next_node;
 }
 
 // The below methods are for removing an element to a list.
@@ -133,29 +123,26 @@ elem list_remove_from_back(list_t *l) {
 
 // Function to remove an element from the front of a list.
 elem list_remove_from_front(list_t *l) {
-	elem value = 0;
-    	node_t *current = l->head;
-    	value = current->value;
-    	l->head = current->next;
-    	list_t *remove;
-    	remove->head = current;
-    	list_free(remove);
+	node_t *current_node = l->head;
+    	l->head = current_node->next;
+    	elem value = current_node->value;
+    	free(current_node);
     	return value;
 }
 
 // Function to remove an element at a particular index of a list.
 elem list_remove_at_index(list_t *l, int index) {
 	int counter = 0;
-    	node_t *prev_node = l->head;
-	node_t *current_node = prev_node->next;
+    	node_t *previous_node = l->head;
+	node_t *current_node = previous_node->next;
     	while (current_node->next != NULL && counter < (index - 1))
 	{
         	counter++;
-		prev_node = current_node;
+		previous_node = current_node;
         	current_node = current_node->next;
     	}
     	node_t *temp = current_node;
-    	prev_node->next = current_node->next;
+    	previous_node->next = current_node->next;
     	elem value = temp->value;
     	free(temp);
     	return value;
